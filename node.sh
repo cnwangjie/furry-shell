@@ -1,6 +1,10 @@
 #!/bin/bash
+
+# Tested in Debian
 clear
-command -v wget >/dev/null 2>&1 || { echo >&2 "Please install wget first"; read ; exit 1; }
+# command -v wget >/dev/null 2>&1 || { echo >&2 "Please install wget first"; read ; exit 1; }
+apt-get update
+apt-get install -y wget gcc make
 clear
 echo "Install node.js ? (yes / no)"
 read install_node
@@ -47,16 +51,16 @@ fi
 
 # install redis
 if [ "$install_redis" = "yes" ];then
-  wget http://download.redis.io/releases/redis-3.2.6.tar.gz
-  tar -xvf redis-3.2.6.tar.gz
+  wget http://download.redis.io/releases/redis-3.2.9.tar.gz
+  tar -xvf redis-3.2.9.tar.gz
   mv redis-3.2.6 redis
   cd redis
+  make distclean
   make
+  cd utils
+  ./install_server.sh
   cd ..
-  mv redis
-  rm /bin/redis-server /bin/redis-cli
-  ln -s ./redis/src/redis-server /bin/redis-server
-  ln -s ./redis/src/redis-cli /bin/redis-cli
+  cd ..
 fi
 
 exit 0;
