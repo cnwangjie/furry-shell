@@ -15,3 +15,4 @@ Useful shell script for myself.
 |list-git-status.sh|list git status of child directory of current directory|
 |zhinput|type chinese in Minecraft|
 |byzanz-record-gui.sh|use byzanz to record a gif|
+|try.sh|auto open a file in temp directory for try|
