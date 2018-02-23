@@ -16,3 +16,4 @@ Useful shell script for myself.
 |zhinput|type chinese in Minecraft|
 |byzanz-record-gui.sh|use byzanz to record a gif|
 |try.sh|auto open a file in temp directory for try|
+|add-class-doc.sh|add class level javadoc for all java source code of current git repo|
