@@ -3,6 +3,8 @@ furry-shell
 
 Useful shell script for myself.
 
+### Descriptions
+
 |script name|description|
 |---|---|
 |lamp.sh|set up Apache + Mysql + PHP enviroment suitable for Debian and CentOS|
@@ -17,3 +19,17 @@ Useful shell script for myself.
 |byzanz-record-gui.sh|use byzanz to record a gif|
 |try.sh|auto open a file in temp directory for try|
 |add-class-doc.sh|add class level javadoc for all java source code of current git repo|
+|toggle-display.sh|toggle second display status|
+
+### Usage
+
+Clone this repo and add this directory to $PATH then you can use them anywhere.
+
+Even you can set a keyborad shortcut for some of them.
+
+Or use `bash -c "$(curl -L FILE_RAW_LINK)"` to execute directly
+
+
+### License
+
+**MIT License for all I code it**
