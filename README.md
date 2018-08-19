@@ -20,6 +20,7 @@ Useful shell script for myself.
 |try.sh|auto open a file in temp directory for try|
 |add-class-doc.sh|add class level javadoc for all java source code of current git repo|
 |toggle-display.sh|toggle second display status|
+|backlight.sh|set backlight of laptop keyboard|
 
 ### Usage
 
