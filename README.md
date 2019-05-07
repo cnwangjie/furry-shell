@@ -5,6 +5,15 @@ Useful shell script for myself.
 
 ### Descriptions
 
+|directory|description|
+|---|---|
+|local|things frequently used, usually be set as env PATH|
+|server|I use them in my server, usually set to a cron task|
+|scripts|some things be used in sometimes or only once for a complex task|
+
+<details>
+<summary>script descriptions</summary>
+
 |script name|description|
 |---|---|
 |lamp.sh|set up Apache + Mysql + PHP enviroment suitable for Debian and CentOS|
@@ -23,6 +32,8 @@ Useful shell script for myself.
 |backlight.sh|set backlight of laptop keyboard|
 |scr.sh|take screenshot|
 
+</details>
+
 ### Usage
 
 Clone this repo and add this directory to $PATH then you can use them anywhere.
@@ -31,7 +42,12 @@ Even you can set a keyborad shortcut for some of them.
 
 Or use `curl -L FILE_RAW_LINK | bash -s ARGS` to execute directly
 
+### Notes
+
+It is highly recommended **to run your application in Docker or other container environment** instead of to setup the host enviroment by a shell script.
 
 ### License
 
 **MIT License for all I code it**
+
+Follow the original license referenced (kept them in code comment)

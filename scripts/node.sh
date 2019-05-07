@@ -2,27 +2,34 @@
 
 # Tested in Debian
 clear
-_command_exist () {
+
+_NO_INTERACTION=`echo $@ | grep -e "-\w*y"`
+
+function _command_exist () {
   command -v $1 >/dev/null 2>&1
 }
 
-if _command_exist wget; then
+if ! _command_exist wget; then
   echo "Please install wget first"
   read
   exit 1
 fi
 
-_install_node () {
+function _install_node () {
+  if _command_exist node; then
+    echo "mongodb is installed in your system"
+    return
+  fi
   NODE_VERSION=`echo "$(wget https://nodejs.org/dist/index.json -O -)" | jq '.[0].version' | grep -o -e '[^"]*'`
   wget https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz
-  tar -xvf node-$NODE_VERSION-linux-x64.tar.xz
+  tar -xvJf node-$NODE_VERSION-linux-x64.tar.xz
   mv node-$NODE_VERSION-linux-x64 /usr/local/node
   rm /bin/node /bin/npm
   ln -s /usr/local/node/bin/node /bin/node
   ln -s /usr/local/node/bin/npm /bin/npm
 }
 
-_install_mongodb () {
+function _install_mongodb () {
   if _command_exist mongod; then
     echo "mongodb is installed in your system"
     return
@@ -36,6 +43,10 @@ _install_mongodb () {
 }
 
 _install_redis () {
+  if _command_exist node; then
+    echo "mongodb is installed in your system"
+    return
+  fi
   wget http://download.redis.io/releases/redis-stable.tar.gz
   tar -xvf redis-stable.tar.gz
   mv redis-stable redis
@@ -47,41 +58,46 @@ _install_redis () {
   cd ..
   cd ..
 }
-
-clear
-echo "Install node.js ? (yes / no)"
-read install_node
-echo "Install mongodb ? (yes / no)"
-read install_mongodb
-echo "Install redis ? (yes / no)"
-read install_redis
-clear
-echo "You select to install following things:"
-if [ "$install_node" != "no" ];then
-  echo "node.js"
+if [ $_NO_INTERACTION ]; then
+  _INSTALL_NODE=yes
+  _INSTALL_REDIS=yes
+  _INSTALL_MONGODB=yes
+else
+  clear
+  echo "Install node.js ? (yes / no)"
+  read _INSTALL_NODE
+  echo "Install mongodb ? (yes / no)"
+  read _INSTALL_MONGODB
+  echo "Install redis ? (yes / no)"
+  read _INSTALL_REDIS
+  clear
+  echo "You select to install following things:"
+  if [ "$_INSTALL_NODE" != "no" ];then
+    echo "node.js"
+  fi
+  if [ "$_INSTALL_MONGODB" != "no" ];then
+    echo "mongodb"
+  fi
+  if [ "$_INSTALL_REDIS" != "no" ];then
+    echo "redis"
+  fi
+  echo ""
+  echo "press ENTER to continue | press CTRL+C to stop"
+  read
 fi
-if [ "$install_mongodb" != "no" ];then
-  echo "mongodb"
-fi
-if [ "$install_redis" != "no" ];then
-  echo "redis"
-fi
-echo ""
-echo "press ENTER to continue | press CTRL+C to stop"
-read
 
 # install node
-if [ "$install_node" != "no" ];then
+if [ "$_INSTALL_NODE" != "no" ];then
   _install_node
 fi
 
 # install mongodb
-if [ "$install_mongodb" = "yes" ];then
+if [ "$_INSTALL_MONGODB" = "yes" ];then
   _install_mongodb
 fi
 
 # install redis
-if [ "$install_redis" = "yes" ];then
+if [ "$_INSTALL_REDIS" = "yes" ];then
   _install_redis
 fi
 

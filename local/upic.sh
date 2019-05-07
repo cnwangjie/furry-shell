@@ -9,9 +9,11 @@ if [ ! -d "$lastuploadpath" ];then
 fi
 
 lastuploadfile=$(cat "${lastuploadpath}")
-
+echo "$filepath"
 if [ "$filepath" = "$lastuploadfile" ];then
   echo "have uploaded!"
 else
-  curl -F "smfile=@$filepath" -F "format=xml" https://sm.ms/api/upload | grep -Po 'https://[a-z0-9./]+.[a-z]+' | curl -X PUT -F c=@- http://fars.ee/a43bc24e-1250-406b-aa3d-890db4739fc7 && echo "/home/${user}/Pictures/${filename}" > ${lastuploadpath}
+  imageurl=`curl -F "smfile=@$filepath" -F "format=xml" https://sm.ms/api/upload | grep -Po 'https://[a-z0-9./]+.[a-z]+'`
+  echo "$imageurl"
+  curl -X PUT -F c="$imageurl" http://fars.ee/929938aa-c95f-42ff-a685-ceddcd5f6e96 && echo "/home/${user}/Pictures/${filename}" > ${lastuploadpath}
 fi
